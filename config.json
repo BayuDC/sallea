@@ -1,0 +1,8 @@
+{
+    "host": "http://localhost",
+    "port": 3000,
+    "waifuPics": {
+        "api": "https://api.waifu.pics/",
+        "img": "https://i.waifu.pics/"
+    }
+}
