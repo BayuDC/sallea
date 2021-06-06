@@ -1,0 +1,35 @@
+<% 
+const menu = {
+    default: ['Waifu', 'Neko', 'Awoo'],
+    other: [],
+    nsfw: []
+}
+
+%>
+<div class="menu" id="menu" tabindex="-1">
+    <% menu.default.forEach(tag => { %>
+    <%- include(components + 'menu-item', {tag: tag}) %>
+    <% }) %>
+    <div class="item sub-menu" tabindex="-1">
+        More
+        <div class="btn">
+            <span class="material-icons"> expand_more </span>
+        </div>
+    </div>
+    <div class="sub-item">
+        <% menu.other.forEach(tag => { %>
+        <%- include(components + 'menu-item', {tag: tag}) %>
+        <% }) %>
+    </div>
+    <div class="item sub-menu" tabindex="-1">
+        NSFW
+        <div class="btn">
+            <span class="material-icons"> expand_more </span>
+        </div>
+    </div>
+    <div class="sub-item">
+        <% menu.nsfw.forEach(tag => { %>
+        <%- include(components + 'menu-item', {tag: tag}) %>
+        <% }) %>
+    </div>
+</div>
