@@ -9,6 +9,10 @@
     "watch": "nodemon app"
   },
   "author": "BayuDC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BayuDC/sallea.git"
+  },
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.6",
