@@ -14,6 +14,9 @@ app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 
+app.get('/full', (req, res) => {
+    res.render('full');
+});
 app.get('/(:tag?)', async (req, res, next) => {
     res.locals.images = await waifu.getImgUrl(req.params.tag);
     next();
