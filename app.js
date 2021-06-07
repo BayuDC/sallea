@@ -14,8 +14,9 @@ app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 
-app.get('/', async (req, res) => {
-    const images = await waifu.getUrlMany();
+app.get('/(:tag?)', async (req, res) => {
+    const tag = req.params.tag || 'waifu';
+    const images = await waifu.getUrlMany(tag);
     if (!images) return res.sendStatus(404);
     res.render('index', { images });
 });

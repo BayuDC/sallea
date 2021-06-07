@@ -15,8 +15,8 @@ const getUrl = async () => {
     }
     return false;
 };
-const getUrlMany = async () => {
-    const res = await fetch(waifuPics.api + 'many/sfw/waifu', {
+const getUrlMany = async tag => {
+    const res = await fetch(waifuPics.api + 'many/sfw/' + tag, {
         method: 'post',
         body: JSON.stringify({ exclude: [] }),
         headers: { 'Content-Type': 'application/json' },
