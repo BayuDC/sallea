@@ -1,1 +1,3 @@
-<a href="/<%= tag.toLowerCase() %> " class="item" tabindex="-1"><%= tag %> </a>
+<a href="/<%= nsfw ? 'nsfw/' : '' %><%= tag.toLowerCase() %>" class="item" tabindex="-1">
+    <%= tag %>
+</a>

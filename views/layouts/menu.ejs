@@ -30,13 +30,18 @@ const menu = {
         'Wink',
         'Yeet'
     ],
-    nsfw: []
+    nsfw: [
+        'Waifu',
+        'Neko',
+        'Trap',
+        'Blowjob'
+    ]
 }
 
 %>
 <div class="menu" id="menu" tabindex="-1">
     <% menu.default.forEach(tag => { %>
-    <%- include(components + 'menu-item', {tag: tag}) %>
+    <%- include(components + 'menu-item', {tag: tag, nsfw: false}) %>
     <% }) %>
     <div class="item sub-menu" tabindex="-1">
         More
@@ -46,7 +51,7 @@ const menu = {
     </div>
     <div class="sub-item">
         <% menu.other.forEach(tag => { %>
-        <%- include(components + 'menu-item', {tag: tag}) %>
+        <%- include(components + 'menu-item', {tag: tag, nsfw: false}) %>
         <% }) %>
     </div>
     <div class="item sub-menu" tabindex="-1">
@@ -57,7 +62,7 @@ const menu = {
     </div>
     <div class="sub-item">
         <% menu.nsfw.forEach(tag => { %>
-        <%- include(components + 'menu-item', {tag: tag}) %>
+        <%- include(components + 'menu-item', {tag: tag, nsfw: true}) %>
         <% }) %>
     </div>
 </div>

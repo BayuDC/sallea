@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const sharp = require('sharp');
 const waifu = require('./utils/waifu');
 const appLocals = require('./app.locals');
-const { host, port, waifuPics } = require('./config.json');
+const { host, port } = require('./config.json');
 const app = express();
 
 app.locals = appLocals;
@@ -14,9 +14,16 @@ app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 
-app.get('/(:tag?)', async (req, res) => {
-    const tag = req.params.tag || 'waifu';
-    const images = await waifu.getUrlMany(tag);
+app.get('/(:tag?)', async (req, res, next) => {
+    res.locals.images = await waifu.getUrlMany(req.params.tag);
+    next();
+});
+app.get('/nsfw/(:tag?)', async (req, res, next) => {
+    res.locals.images = await waifu.getUrlMany(req.params.tag, 'nsfw');
+    next();
+});
+app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res) => {
+    const images = res.locals.images;
     if (!images) return res.sendStatus(404);
     res.render('index', { images });
 });
