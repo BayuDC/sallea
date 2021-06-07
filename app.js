@@ -25,7 +25,6 @@ app.get('/nsfw/(:tag?)', async (req, res, next) => {
 app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res) => {
     const images = res.locals.images;
     if (!images) return res.sendStatus(404);
-    images.length = 1;
     res.render('index', { images });
 });
 app.get('/img/(:name)', async (req, res) => {
