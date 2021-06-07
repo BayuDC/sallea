@@ -14,11 +14,10 @@ app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 
-app.get('/', (req, res) => {
-    const data = {
-        images: [waifu.modUrl('https://i.waifu.pics/fuGfYQJ.jpg')],
-    };
-    res.render('index', data);
+app.get('/', async (req, res) => {
+    const images = await waifu.getUrlMany();
+    if (!images) return res.sendStatus(404);
+    res.render('index', { images });
 });
 app.get('/img/(:name)', async (req, res) => {
     const name = req.params.name;

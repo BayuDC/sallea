@@ -7,6 +7,26 @@ const getName = url => {
 const modUrl = url => {
     return `${host}:${port}/img/${getName(url)}`;
 };
+const getUrl = async () => {
+    const res = await fetch(waifuPics.api + 'sfw/waifu');
+    if (res.status == 200) {
+        const body = await res.json();
+        return modUrl(body.url);
+    }
+    return false;
+};
+const getUrlMany = async () => {
+    const res = await fetch(waifuPics.api + 'many/sfw/waifu', {
+        method: 'post',
+        body: JSON.stringify({ exclude: [] }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+    if (res.status == 200) {
+        const body = await res.json();
+        return body.files.map(url => modUrl(url));
+    }
+    return false;
+};
 const getImgStream = async name => {
     const res = await fetch(waifuPics.img + name);
     if (res.status == 200) return res.body;
@@ -14,6 +34,7 @@ const getImgStream = async name => {
 };
 
 module.exports = {
-    modUrl,
+    getUrl,
+    getUrlMany,
     getImgStream,
 };
