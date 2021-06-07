@@ -7,15 +7,7 @@ const getName = url => {
 const modUrl = url => {
     return `${host}:${port}/img/${getName(url)}`;
 };
-const getUrl = async () => {
-    const res = await fetch(waifuPics.api + 'sfw/waifu');
-    if (res.status == 200) {
-        const body = await res.json();
-        return modUrl(body.url);
-    }
-    return false;
-};
-const getUrlMany = async (tag, type = 'sfw') => {
+const getImgUrl = async (tag, type = 'sfw') => {
     const uri = `${waifuPics.api}many/${type}/${tag || 'waifu'}`;
     const res = await fetch(uri, {
         method: 'post',
@@ -35,7 +27,6 @@ const getImgStream = async name => {
 };
 
 module.exports = {
-    getUrl,
-    getUrlMany,
+    getImgUrl,
     getImgStream,
 };
