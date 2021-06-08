@@ -1,13 +1,10 @@
 const fetch = require('node-fetch');
-const { host, port, waifuPics } = require('../config.json');
+const { waifuPics } = require('../config.json');
 
 const getName = url => {
     return url.slice(waifuPics.img.length);
 };
-const modUrl = url => {
-    return `${host}:${port}/img/${getName(url)}`;
-};
-const getImgUrl = async (tag, type = 'sfw') => {
+const getImg = async (tag, type = 'sfw') => {
     const uri = `${waifuPics.api}many/${type}/${tag || 'waifu'}`;
     const res = await fetch(uri, {
         method: 'post',
@@ -16,7 +13,7 @@ const getImgUrl = async (tag, type = 'sfw') => {
     });
     if (res.status == 200) {
         const body = await res.json();
-        return body.files.map(url => modUrl(url));
+        return body.files.map(url => getName(url));
     }
     return false;
 };
@@ -27,6 +24,6 @@ const getImgStream = async name => {
 };
 
 module.exports = {
-    getImgUrl,
+    getImg,
     getImgStream,
 };

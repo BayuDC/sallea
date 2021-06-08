@@ -14,21 +14,21 @@ app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 
-app.get('/full', (req, res) => {
-    res.render('full');
-});
 app.get('/(:tag?)', async (req, res, next) => {
-    res.locals.images = await waifu.getImgUrl(req.params.tag);
+    res.locals.images = await waifu.getImg(req.params.tag);
     next();
 });
 app.get('/nsfw/(:tag?)', async (req, res, next) => {
-    res.locals.images = await waifu.getImgUrl(req.params.tag, 'nsfw');
+    res.locals.images = await waifu.getImg(req.params.tag, 'nsfw');
     next();
 });
 app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res) => {
     const images = res.locals.images;
     if (!images) return res.sendStatus(404);
     res.render('index', { images });
+});
+app.get('/full/(:name)', (req, res) => {
+    res.render('full', { img: req.params.name });
 });
 app.get('/img/(:name)', async (req, res) => {
     const name = req.params.name;
