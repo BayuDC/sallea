@@ -2,10 +2,10 @@
     <% images.forEach(img => { %>
     <div class="img" tabindex="0">
         <img src="/img/<%= img %>?width=320">
-        <a href="/full/<%= img %> " class="btn btn-float btn-image" tabindex="-1">
+        <a href="/full/<%= img %>" class="btn btn-float btn-image" tabindex="-1">
             <span class="material-icons-outlined">image</span>
         </a>
-        <a href="#" class="btn btn-float btn-download" tabindex="-1">
+        <a href="/dl/<%= img %>" class="btn btn-float btn-download" tabindex="-1">
             <span class="material-icons-outlined">file_download</span>
         </a>
     </div>
