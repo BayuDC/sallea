@@ -23,8 +23,10 @@ app.get('/nsfw/(:tag?)', async (req, res, next) => {
     next();
 });
 app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res) => {
+    const type = req.query.type;
     const images = res.locals.images;
     if (!images) return res.sendStatus(404);
+    if (type && type == 'json') return res.status(200).json(images);
     res.status(200).render('index', { images });
 });
 app.get('/f/(:name)', (req, res) => {
