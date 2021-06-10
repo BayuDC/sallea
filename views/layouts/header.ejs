@@ -1,9 +1,9 @@
 <div class="header">
-    <%- include(components + 'button', {name: 'menu', icon: 'menu'} ) %>
+    <%- include(components + 'button', {name: 'menu'} ) %>
     <div class="logo"><a href="/">SALLEA</a></div>
-    <% if (locals.images) { %>
-    <%- include(components + 'button', {name: 'refresh', icon: 'refresh'} ) %>
+    <% if (locals.img) { %>
+    <%- include(components + 'button', {name: 'file_download'} ) %>
     <% } else { %>
-    <%- include(components + 'button', {name: 'download', icon: 'file_download'} ) %>
+    <%- include(components + 'button', {name: 'refresh'} ) %>
     <% } %>
 </div>
