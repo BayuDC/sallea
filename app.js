@@ -22,15 +22,21 @@ app.get('/nsfw/(:tag?)', async (req, res, next) => {
     res.locals.images = await waifu.getImg(req.params.tag, 'nsfw');
     next();
 });
-app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res) => {
+app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res, next) => {
     const type = req.query.type;
     const images = res.locals.images;
-    if (!images) return res.sendStatus(404);
-    if (type && type == 'json') return res.status(200).json(images);
+    if (type && type == 'json') {
+        if (!images) return res.sendStatus(404);
+        return res.status(200).json(images);
+    }
+    if (!images) return next();
     res.status(200).render('index', { images });
 });
-app.get('/f/(:name)', (req, res) => {
-    res.status(200).render('full', { img: req.params.name });
+app.get('/f/(:name)', async (req, res, next) => {
+    const name = req.params.name;
+    const img = await waifu.getImgStream(name);
+    if (!img) return next();
+    res.status(200).render('full', { img: name });
 });
 
 app.get('/[i|d]/(:name)', async (req, res, next) => {
@@ -53,5 +59,8 @@ app.get('/i/(:name)', async (req, res) => {
 app.get('/d/(:name)', async (req, res) => {
     const { img, name } = res.locals;
     return img.pipe(res.attachment(name));
+});
+app.use((req, res) => {
+    res.status(404).render('error');
 });
 app.listen(port, () => console.log(`Server is running at ${host}:${port}`));
