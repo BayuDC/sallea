@@ -44,8 +44,9 @@ app.get('/[i|d]/(:name)', async (req, res, next) => {
 app.get('/i/(:name)', async (req, res) => {
     const { img, name } = res.locals;
     const width = parseInt(req.query.width);
-    res.type(waifu.getType(name));
-    if (!width) return img.pipe(res);
+    const type = waifu.getType(name);
+    res.type(type);
+    if (!width || type == 'gif') return img.pipe(res);
     return img.pipe(sharp().resize({ width: width })).pipe(res);
 });
 
