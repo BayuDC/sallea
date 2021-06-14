@@ -17,7 +17,10 @@ const getImg = async (tag, type = 'sfw') => {
     });
     if (res.status == 200) {
         const body = await res.json();
-        return body.files.map(url => getName(url));
+        const images = body.files;
+        if (images.length > 0) {
+            return images.map(url => getName(url));
+        }
     }
     return false;
 };
