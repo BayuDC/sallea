@@ -1,4 +1,10 @@
-<div id="gallery" tabindex="-1">
+<div id="gallery" class="load" tabindex="-1">
+    <div class="load-box">
+        <span class="material-icons">circle</span>
+        <span class="material-icons">circle</span>
+        <span class="material-icons">circle</span>
+        <span class="material-icons">circle</span>
+    </div>
     <% images.forEach(img => { %>
     <div class="img" style="display: none" tabindex="0">
         <img src="/i/<%= img %>?width=320">
