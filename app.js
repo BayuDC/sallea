@@ -4,10 +4,10 @@ const morgan = require('morgan');
 const sharp = require('sharp');
 const waifu = require('./utils/waifu');
 const appLocals = require('./app.locals');
-const { host, port } = require('./config.json');
+const { host, port, nsfw } = require('./config.json');
 const app = express();
 
-app.locals = appLocals;
+app.locals = { ...appLocals, nsfw: nsfw.enable };
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/default');
 app.use(morgan('dev'));
@@ -19,6 +19,13 @@ app.get('/(:tag?)', async (req, res, next) => {
     next();
 });
 app.get('/nsfw/(:tag?)', async (req, res, next) => {
+    if (!nsfw.enable) {
+        const msg = nsfw.msg;
+        const type = req.query.type;
+        res.status(404);
+        if (type && type == 'json') return res.json({ msg });
+        return res.render('error', { msg });
+    }
     res.locals.images = await waifu.getImg(req.params.tag, 'nsfw');
     next();
 });

@@ -54,6 +54,7 @@ const menu = {
         <%- include(components + 'menu-item', {tag: tag}) %>
         <% }) %>
     </div>
+    <% if (nsfw) { %>
     <div class="item sub-menu" tabindex="-1">
         NSFW
         <div class="btn">
@@ -62,7 +63,8 @@ const menu = {
     </div>
     <div class="sub-item">
         <% menu.nsfw.forEach(tag => { %>
-        <%- include(components + 'menu-item', {tag: tag, nsfw: true}) %>
+        <%- include(components + 'menu-item', {tag: tag, nsfwLink: true}) %>
         <% }) %>
     </div>
+    <% } %>
 </div>
