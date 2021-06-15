@@ -1,7 +1,9 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const favicon = require('serve-favicon');
 const morgan = require('morgan');
 const sharp = require('sharp');
+const path = require('path');
 const waifu = require('./utils/waifu');
 const appLocals = require('./app.locals');
 const { host, port, nsfw } = require('./config.json');
@@ -13,6 +15,7 @@ app.set('layout', 'layouts/default');
 app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.get('/(:tag?)', async (req, res, next) => {
     res.locals.images = await waifu.getImg(req.params.tag);
@@ -32,6 +35,7 @@ app.get('/nsfw/(:tag?)', async (req, res, next) => {
 app.get(['/(:tag?)', '/nsfw/(:tag?)'], (req, res, next) => {
     const type = req.query.type;
     const images = res.locals.images;
+    images.length = 2;
     if (type && type == 'json') {
         if (!images) return res.sendStatus(404);
         return res.status(200).json(images);
