@@ -1,7 +1,6 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const favicon = require('serve-favicon');
-const morgan = require('morgan');
 const sharp = require('sharp');
 const path = require('path');
 const waifu = require('./utils/waifu');
@@ -13,7 +12,6 @@ const port = process.env.PORT || 3000;
 app.locals = { ...appLocals, nsfw: nsfw.enable };
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/default');
-app.use(morgan('dev'));
 app.use(express.static('./public'));
 app.use(expressLayouts);
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

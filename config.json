@@ -1,6 +1,6 @@
 {
     "nsfw": {
-        "enable": true,
+        "enable": false,
         "msg": "Stay Halal Brother"
     },
     "waifuPics": {
